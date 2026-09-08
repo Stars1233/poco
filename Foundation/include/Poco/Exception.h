@@ -81,8 +81,11 @@ public:
 		/// The copy can later be thrown again by
 		/// invoking rethrow() on it.
 
-	virtual void rethrow() const;
+	[[noreturn]] virtual void rethrow() const;
 		/// (Re)Throws the exception.
+		///
+		/// Declared [[noreturn]]: an overriding implementation
+		/// must always throw and must never return normally.
 		///
 		/// This is useful for temporarily storing a
 		/// copy of an exception (see clone()), then
@@ -161,6 +164,7 @@ inline int Exception::code() const
 		const char* className() const noexcept;										\
 		[[nodiscard]]                                                               \
 		Poco::Exception* clone() const;												\
+		[[noreturn]]                                                                \
 		void rethrow() const;														\
 	};
 
